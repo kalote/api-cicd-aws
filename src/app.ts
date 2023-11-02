@@ -5,8 +5,7 @@ import mongoose from "mongoose";
 import model from "./model";
 
 const mongoString =
-  (process.env.DB_URL as string) ||
-  "mongodb://admin:mypassword@127.0.0.1:27017/appdb?authSource=admin";
+  (process.env.DB_URL as string) || "mongodb://127.0.0.1:27017/appdb";
 
 dotenv.config();
 
