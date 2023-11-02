@@ -18,14 +18,10 @@ app.get("/status", (req: Request, res: Response) => {
 
 app.post("/data", parser, (req: Request, res: Response) => {
   if (!req.body.name)
-    return res
-      .status(400)
-      .json({ status: "400", message: "missing 'name' property" });
+    return res.status(400).json({ message: "missing 'name' property" });
 
   if (!req.body.position)
-    return res
-      .status(400)
-      .json({ status: "400", message: "missing 'position' property" });
+    return res.status(400).json({ message: "missing 'position' property" });
 
   const { name, position } = req.body;
   return res.json({ name, position });
