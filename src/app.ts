@@ -1,5 +1,22 @@
 import express, { Request, Response, Application } from "express";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import model from "./model";
+
+dotenv.config();
+
+mongoose.connect(process.env.DB_URL as string);
+
+const database = mongoose.connection;
+
+database.on("error", (error) => {
+  console.log(error);
+});
+
+database.once("connected", () => {
+  console.log("Database Connected");
+});
 
 const app: Application = express();
 const parser = bodyParser.json();
@@ -16,7 +33,8 @@ app.get("/status", (req: Request, res: Response) => {
   res.json({ message: "ok" });
 });
 
-app.post("/data", parser, (req: Request, res: Response) => {
+// main app
+app.post("/data", parser, async (req: Request, res: Response) => {
   if (!req.body.name)
     return res.status(400).json({ message: "missing 'name' property" });
 
@@ -24,7 +42,17 @@ app.post("/data", parser, (req: Request, res: Response) => {
     return res.status(400).json({ message: "missing 'position' property" });
 
   const { name, position } = req.body;
-  return res.json({ name, position });
+  const data = new model({
+    name,
+    position,
+  });
+
+  try {
+    await data.save();
+    return res.status(201).json({ name, position });
+  } catch (e: any) {
+    res.status(400).json({ message: e?.message });
+  }
 });
 
 export default app;
