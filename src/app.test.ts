@@ -1,4 +1,5 @@
 import request from "supertest";
+import mongoose from "mongoose";
 
 import app from "./app";
 
@@ -45,5 +46,9 @@ describe("Main routes", () => {
     expect(res.body).toEqual({
       message: "missing 'position' property",
     });
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
   });
 });

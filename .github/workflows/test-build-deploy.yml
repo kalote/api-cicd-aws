@@ -9,20 +9,15 @@ jobs:
     name: Application test build & deploy
     runs-on: ubuntu-latest
 
-    # services:
-    #   redis:
-    #     image: redis
-    #     ports:
-    #       - "6379:6379"
-
-    #   postgres:
-    #     image: postgres:15.0
-    #     env:
-    #       POSTGRES_USER: postgres
-    #       POSTGRES_PASSWORD: relayer
-    #       POSTGRES_DB: service-relayer
-    #     ports:
-    #       - "5432:5432"
+    services:
+      mongo:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_PASSWORD: mypassword
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_DATABASE: appdb
+        ports:
+          - "27017:27017"
 
     steps:
       - name: Checkout
@@ -40,4 +35,4 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: npm run test
+        run: DB_URL=${{ vars.DB_URL }} npm run test
