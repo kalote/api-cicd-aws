@@ -35,4 +35,4 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: DB_URL={{ env.DB_URL }} npm run test
+        run: DB_URL=${{ vars.DB_URL }} npm run test
