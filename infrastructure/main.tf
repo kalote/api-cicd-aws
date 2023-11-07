@@ -55,4 +55,7 @@ module "ecs" {
 
   target_group_arn = module.instances.target_group_arn
   repo_url         = module.ecr.repository_url
+  subnet1_id       = module.network.subnet1_id
+  subnet2_id       = module.network.subnet2_id
+  sg_app_id        = module.network.sg_app_id
 }

@@ -3,7 +3,8 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 }
 
 resource "aws_ecs_task_definition" "application" {
-  family = "application"
+  family       = "application"
+  network_mode = "awsvpc"
   container_definitions = jsonencode([
     {
       name      = "application"
@@ -13,7 +14,7 @@ resource "aws_ecs_task_definition" "application" {
       essential = true
       portMappings = [
         {
-          containerPort = 3000
+          containerPort = 80
           hostPort      = 80
           protocol      = "tcp"
         }
@@ -27,11 +28,19 @@ resource "aws_ecs_service" "application" {
   cluster         = aws_ecs_cluster.ecs_cluster.id
   task_definition = aws_ecs_task_definition.application.arn
   desired_count   = "1"
-  iam_role        = aws_iam_role.ecsServiceRole.name
+
+  placement_constraints {
+    type = "distinctInstance"
+  }
+
+  network_configuration {
+    subnets         = [var.subnet1_id, var.subnet2_id]
+    security_groups = [var.sg_app_id]
+  }
 
   load_balancer {
     target_group_arn = var.target_group_arn
     container_name   = "application"
-    container_port   = 3000
+    container_port   = 80
   }
 }
