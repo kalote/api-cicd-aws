@@ -10,7 +10,18 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   launch_template {
     id      = aws_launch_template.ecs_template.id
-    version = "$Latest"
+    version = aws_launch_template.ecs_template.latest_version
+  }
+
+  instance_refresh {
+    strategy = "Rolling"
+    triggers = ["tag"]
+  }
+
+  tag {
+    key                 = "launch version"
+    value               = aws_launch_template.ecs_template.latest_version
+    propagate_at_launch = true
   }
 
   tag {
