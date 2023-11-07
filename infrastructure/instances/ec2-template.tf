@@ -1,6 +1,6 @@
 resource "aws_launch_template" "ecs_template" {
   name_prefix   = "ecs-template"
-  image_id      = "ami-06dd92ecc74fdfb36" # Ubuntu server Jammy 22.04 
+  image_id      = "ami-062c116e449466e7f" # Amazon Linux ECS 
   instance_type = "t2.micro"
 
   key_name               = "ec2ecs" # Key pair to ssh onto ec2

@@ -2,7 +2,7 @@ name: test-build-deploy
 
 on:
   pull_request:
-    # paths: ["src/**"]
+    paths-ignore: ["infrastructure/**"]
 
 jobs:
   test-build-deploy:
