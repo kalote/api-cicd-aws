@@ -1,4 +1,4 @@
-resource "aws_instance" "application" {
+resource "aws_instance" "mongo" {
   ami                  = data.aws_ami.amazon_linux.id
   instance_type        = "t2.micro"
   subnet_id            = var.subnet_private_id
