@@ -17,6 +17,10 @@ aws ecr get-login-password --region ${registry_region} | docker login \
     --password-stdin https://${registry_id}.dkr.ecr.${registry_region}.amazonaws.com
 # Run the app
 docker run -d \
+    --log-driver=awslogs \
+    --log-opt awslogs-region=${registry_region} \
+    --log-opt awslogs-group=/ec2/logs/application \
+    --log-opt awslogs-create-group=true \
     -e REDIS_URL="redis://${redis_instance_ip}:6379/0" \
     -e DB_URL="mongodb://$cred@${mongo_instance_ip}:27017/appdb?authSource=admin" \
     -p 80:8000 \

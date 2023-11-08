@@ -36,7 +36,7 @@ data "aws_secretsmanager_secret" "env_secrets" {
   name = "dev/db_credentials"
 }
 
-data "aws_iam_policy_document" "ecr_access" {
+data "aws_iam_policy_document" "services_access" {
   statement {
     actions = [
       "ecr:*",
@@ -58,5 +58,17 @@ data "aws_iam_policy_document" "ecr_access" {
     ]
 
     effect = "Allow"
+  }
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogStreams"
+    ]
+
+    resources = ["*"]
+
+    effect = "allow"
   }
 }
