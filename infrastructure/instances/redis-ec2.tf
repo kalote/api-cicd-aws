@@ -11,5 +11,6 @@ resource "aws_instance" "redis" {
   tags = {
     Name = "Redis"
   }
-  user_data = filebase64("${path.module}/templates/init-redis.sh")
+  user_data                   = filebase64("${path.module}/templates/init-redis.sh")
+  user_data_replace_on_change = true
 }
