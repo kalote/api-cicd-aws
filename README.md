@@ -1,6 +1,6 @@
 # CRUD API application
 
-This application is a showcase of using:
+This application is a showcase of the following technologies:
 - CRUD application (express.js, typescript, mongodb, redis, jest, docker)
 - Terraform IaC
 - Github Action CICD
@@ -70,12 +70,15 @@ docker build -t crudapi:0.0.1 .
 The infrastructure is managed using IaC Terraform tool.
 
 The `main.tf` is the entry point where the provider and the backend are setup (using S3 for state and DynamoDB for lock). This is also where the modules are called. There are 4 modules:
+
 - state: responsible for the state infrastructure (S3 bucket and DynamoDB table)
 - network: handles the VPC creation + 2 subnets (1 private, 1 public) + Internet GW + NAT GW + SG (1 sg for app access / 1 sg for mongo + redis access)
 - ecr: creates the ECR registry to host our application docker images
 - instances: manages the EC2 instances (1 for the application (public) / 1 for MongoDB (private) / 1 for Redis (private)) + IAM profile + templates used during boot (using the `user-data` attributes)
 
-To deploy the stack, run:
+Prior to the deployment, create a secret in secrets manager (named `dev/db_credentials`) containing the following key value pair: `DB_CREDENTIALS / username:password`
+
+Then, deploy the stack using the following:
 
 ```bash
 cd infrastructure
@@ -83,6 +86,8 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+Note: on EC2 t2.micro, the starting time is ~7min (😲)
 
 ## CICD
 
