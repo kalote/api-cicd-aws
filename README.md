@@ -1,11 +1,21 @@
-# CRUD API application
+# 💻 💾 CRUD API application
 
 This application is a showcase of the following technologies:
 - CRUD application (express.js, typescript, mongodb, redis, jest, docker)
 - Terraform IaC
 - Github Action CICD
 
-# Application
+It runs in AWS using:
+- 1 VPC
+- 1 public subnet (to run the public facing application)
+- 1 private subnet (to run mongodb + redis)
+- 1 secret to store DB credentials
+- 3 ec2 instances: application, mongo, redis
+- 1 ecr repository to store our application images
+- 3 cloud watch log groups to store containers' logs
+- 1 S3 + 1 DynamoDB for TF state management
+
+# 🫡 Application
 
 The app is a basic web-server using expressJS and Typescript running on port 8000. It comes with a few tests and a `Dockerfile` to build the docker image.
 
@@ -65,7 +75,7 @@ To build the docker image:
 docker build -t crudapi:0.0.1 .
 ```
 
-# Infrastructure
+# 🧱 Infrastructure
 
 The infrastructure is managed using IaC Terraform tool.
 
@@ -76,7 +86,9 @@ The `main.tf` is the entry point where the provider and the backend are setup (u
 - ecr: creates the ECR registry to host our application docker images
 - instances: manages the EC2 instances (1 for the application (public) / 1 for MongoDB (private) / 1 for Redis (private)) + IAM profile + templates used during boot (using the `user-data` attributes)
 
-Prior to the deployment, create a secret in secrets manager (named `dev/db_credentials`) containing the following key value pair: `DB_CREDENTIALS / username:password`
+Prior to the deployment:
+- create a keypair and change the value in `infrastructure/instances/*-ec2.tf`
+- create a secret in secrets manager (named `dev/db_credentials`) containing the following key value pair: `DB_CREDENTIALS / username:password`
 
 Then, deploy the stack using the following:
 
@@ -87,9 +99,9 @@ terraform plan
 terraform apply
 ```
 
-Note: on EC2 t2.micro, the starting time is ~7min (😲)
+Note: on t2.micro, the starting time is ~7min (😲) so be patient 😊
 
-## CICD
+# 🚀 CICD
 
 The CICD uses GitHub Actions. The config files are located in `.github/workflows`. There are 5 files:
 
