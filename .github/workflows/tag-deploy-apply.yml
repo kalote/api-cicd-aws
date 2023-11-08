@@ -38,5 +38,6 @@ jobs:
         uses: dflook/terraform-apply@v1
         with:
           path: "infrastructure"
+          auto_approve: true
           variables: |
             app_version="${{ github.ref_name }}"
