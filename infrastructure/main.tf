@@ -29,33 +29,36 @@ module "network" {
   }
 }
 
-module "instances" {
-  source = "./instances"
+# module "instances" {
+#   source = "./instances"
 
-  vpc_id      = module.network.vpc_id
-  subnet1_id  = module.network.subnet1_id
-  subnet2_id  = module.network.subnet2_id
-  sg_app_id   = module.network.sg_app_id
-  sg_mongo_id = module.network.sg_mongo_id
+#   vpc_id      = module.network.vpc_id
+#   subnet1_id  = module.network.subnet1_id
+#   subnet2_id  = module.network.subnet2_id
+#   sg_app_id   = module.network.sg_app_id
+#   sg_mongo_id = module.network.sg_mongo_id
 
-  log_bucket_name = "terraform-alb-logs-7yx4"
+#   log_bucket_name = "terraform-alb-logs-7yx4"
 
-  tags = {
-    environment = "dev"
-    project     = "api-mongo-redis"
-  }
-}
+#   tags = {
+#     environment = "dev"
+#     project     = "api-mongo-redis"
+#   }
+# }
 
 module "ecr" {
   source = "./ecr"
 }
 
-module "ecs" {
-  source = "./ecs"
+# module "ecs" {
+#   source = "./ecs"
 
-  target_group_arn = module.instances.target_group_arn
-  repo_url         = module.ecr.repository_url
-  subnet1_id       = module.network.subnet1_id
-  subnet2_id       = module.network.subnet2_id
-  sg_app_id        = module.network.sg_app_id
-}
+#   target_group_arn = module.instances.target_group_arn
+#   repo_url         = module.ecr.repository_url
+#   subnet1_id       = module.network.subnet1_id
+#   subnet2_id       = module.network.subnet2_id
+#   sg_app_id        = module.network.sg_app_id
+#   asg_arn          = module.instances.asg_arn
+
+#   depends_on = [module.instances]
+# }

@@ -1,22 +1,10 @@
-data "aws_iam_policy_document" "assume_role_ecs" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["ecs.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
+# Create ecsTaskExecutionRole
+resource "aws_iam_role" "execution_role" {
+  name               = "ecsTaskExecutionRole"
+  assume_role_policy = data.aws_iam_policy_document.execution_role.json
 }
 
-resource "aws_iam_role" "ecsServiceRole" {
-  name               = "ecsServiceRole"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_ecs.json
-}
-
-resource "aws_iam_role_policy_attachment" "ecsServiceRole" {
-  role       = aws_iam_role.ecsServiceRole.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
+resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
+  role       = aws_iam_role.execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }

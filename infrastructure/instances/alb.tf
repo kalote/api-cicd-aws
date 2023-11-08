@@ -10,7 +10,7 @@ resource "aws_lb" "ecs_alb" {
 
   access_logs {
     bucket  = aws_s3_bucket.alb_logs.id
-    prefix  = "lb"
+    prefix  = "lb-access"
     enabled = true
   }
 
@@ -34,10 +34,10 @@ resource "aws_lb_target_group" "ecs_tg" {
   name        = "ecs-target-group"
   port        = 80
   protocol    = "HTTP"
-  target_type = "ip"
+  target_type = "instance"
   vpc_id      = var.vpc_id
 
   health_check {
-    path = "/status"
+    path = "/"
   }
 }

@@ -33,17 +33,17 @@ output "sg_mongo_id" {
   value       = module.network.sg_mongo_id
 }
 
-output "alb_dns_name" {
-  description = "The LB DNS name"
-  value       = module.instances.alb_dns_name
-}
+# output "alb_dns_name" {
+#   description = "The LB DNS name"
+#   value       = module.instances.alb_dns_name
+# }
 
 output "ecr_registry_url" {
   description = "The ECR registry URL"
   value       = module.ecr.repository_url
 }
 
-output "target_group_arn" {
-  description = "The target group ARN"
-  value       = module.instances.target_group_arn
-}
+# output "target_group_arn" {
+#   description = "The target group ARN"
+#   value       = module.instances.target_group_arn
+# }

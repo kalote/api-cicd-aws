@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/sh
 echo ECS_CLUSTER=my-ecs-cluster >> /etc/ecs/ecs.config

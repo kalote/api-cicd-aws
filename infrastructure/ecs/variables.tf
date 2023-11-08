@@ -28,3 +28,8 @@ variable "sg_app_id" {
   description = "Security group for application id"
   type        = string
 }
+
+variable "asg_arn" {
+  description = "ARN of the ASG"
+  type        = string
+}
