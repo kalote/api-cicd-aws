@@ -110,3 +110,5 @@ The CICD uses GitHub Actions. The config files are located in `.github/workflows
 - infra-plan.yml: triggered for every PR that is impacting the `infrastructure` folder. The action will run terraform plan and comment on the PR with the plan to execute.
 - infra-apply.yml: triggered for every push to main (e.g., when a PR is merged) that is impacting the `infrastructure` folder. The action will run terraform apply on the previously validated plan.
 - tag-deploy-apply.yml: triggered when a tag is push. It will build + push the docker image with the provided tag and trigger the infra deployment with this tag as the `app_version`.
+
+Note: the repository is supposed to have the `main` branch protected, but restriction doesn't apply on free account
