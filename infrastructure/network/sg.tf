@@ -46,16 +46,6 @@ resource "aws_security_group" "security_group_mongo" {
     description = "MONGO"
   }
 
-  # SSH access only from my home computer
-  # Will be removed
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["83.51.43.43/32"]
-    description = "SSH"
-  }
-
   ingress {
     from_port   = 6379
     to_port     = 6379
