@@ -32,6 +32,10 @@ data "aws_iam_policy_document" "ec2_assume_role" {
   }
 }
 
+data "aws_secretsmanager_secret" "env_secrets" {
+  name = "dev/db_credentials"
+}
+
 data "aws_iam_policy_document" "ecr_access" {
   statement {
     actions = [
@@ -41,5 +45,18 @@ data "aws_iam_policy_document" "ecr_access" {
     resources = [
       "*"
     ]
+
+    effect = "Allow"
+  }
+  statement {
+    actions = [
+      "secretsmanager:GetSecretValue",
+    ]
+
+    resources = [
+      data.aws_secretsmanager_secret.env_secrets.arn
+    ]
+
+    effect = "Allow"
   }
 }

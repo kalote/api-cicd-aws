@@ -19,6 +19,7 @@ resource "aws_instance" "application" {
     registry_region   = "${var.registry_region}"
     redis_instance_ip = "${aws_instance.redis.private_ip}"
     mongo_instance_ip = "${aws_instance.mongo.private_ip}"
+    secret_name       = "${data.aws_secretsmanager_secret.env_secrets.name}"
   })
 
   user_data_replace_on_change = true
