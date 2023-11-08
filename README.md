@@ -74,6 +74,7 @@ terraform apply
 ## CICD
 
 The CICD uses GitHub Actions. The config files are located in `.github/workflows`. There are 5 files:
+
 - build-test.yml: triggered for every PR that is not impacting the `infrastructure` folder. The action will build the app and run the tests
 - deploy.yml: triggered for every push to main (e.g., when a PR is merged) that i not impacting the `infrastructure` folder. It will connect to ECR using GitHub secrets and build + push the docker image
 - infra-plan.yml: triggered for every PR that is impacting the `infrastructure` folder. The action will run terraform plan and comment on the PR with the plan to execute.
