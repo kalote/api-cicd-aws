@@ -69,6 +69,6 @@ data "aws_iam_policy_document" "services_access" {
 
     resources = ["*"]
 
-    effect = "allow"
+    effect = "Allow"
   }
 }
