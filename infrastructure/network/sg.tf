@@ -1,6 +1,15 @@
 resource "aws_security_group" "security_group_app" {
-  name   = "security-group-application"
-  vpc_id = aws_vpc.main.id
+  depends_on = [aws_vpc.main, aws_subnet.subnet_public]
+  name       = "security-group-application"
+  vpc_id     = aws_vpc.main.id
+
+  ingress {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "App Default Port"
+  }
 
   ingress {
     from_port   = 80
@@ -8,6 +17,14 @@ resource "aws_security_group" "security_group_app" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     description = "HTTP"
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH"
   }
 
   egress {
@@ -23,15 +40,24 @@ resource "aws_security_group" "security_group_app" {
 }
 
 resource "aws_security_group" "security_group_mongo" {
-  name   = "security-group-mongo"
-  vpc_id = aws_vpc.main.id
+  depends_on = [aws_vpc.main, aws_subnet.subnet_private]
+  name       = "security-group-private"
+  vpc_id     = aws_vpc.main.id
 
   ingress {
     from_port   = 27017
     to_port     = 27017
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "HTTP"
+    cidr_blocks = ["${aws_subnet.subnet_public.cidr_block}"]
+    description = "MONGO"
+  }
+
+  ingress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["${aws_subnet.subnet_public.cidr_block}"]
+    description = "REDIS"
   }
 
   egress {
