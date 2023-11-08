@@ -20,4 +20,6 @@ resource "aws_instance" "application" {
     redis_instance_ip = "${aws_instance.redis.private_ip}"
     mongo_instance_ip = "${aws_instance.mongo.private_ip}"
   })
+
+  user_data_replace_on_change = true
 }
