@@ -41,5 +41,5 @@ module "instances" {
   subnet_public_id  = module.network.subnet_public_id
   subnet_private_id = module.network.subnet_private_id
   ecr_repo_url      = module.ecr.repository_url
-  version           = var.app_version
+  app_version       = var.app_version
 }
