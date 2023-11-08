@@ -27,3 +27,8 @@ output "ecr_registry_url" {
   description = "The ECR registry URL"
   value       = module.ecr.repository_url
 }
+
+output "ecr_registry_id" {
+  description = "The ECR registry ID"
+  value       = module.ecr.registry_id
+}

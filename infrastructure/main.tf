@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = var.region
 }
 
 module "state" {
@@ -42,4 +42,6 @@ module "instances" {
   subnet_private_id = module.network.subnet_private_id
   ecr_repo_url      = module.ecr.repository_url
   app_version       = var.app_version
+  registry_id       = module.ecr.registry_id
+  registry_region   = var.region
 }

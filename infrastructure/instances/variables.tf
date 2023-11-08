@@ -28,3 +28,13 @@ variable "app_version" {
   type        = string
   default     = "latest"
 }
+
+variable "registry_id" {
+  description = "The ECR Registry id"
+  type        = string
+}
+
+variable "registry_region" {
+  description = "The region of the ECR registry"
+  type        = string
+}
