@@ -32,3 +32,18 @@ output "ecr_registry_id" {
   description = "The ECR registry ID"
   value       = module.ecr.registry_id
 }
+
+output "mongo_instance_ip" {
+  description = "The mongo instance private IP"
+  value       = module.instances.mongo_instance_ip
+}
+
+output "redis_instance_ip" {
+  description = "The redis instance private IP"
+  value       = module.instances.redis_instance_ip
+}
+
+output "application_instance_ip" {
+  description = "The app instance public IP"
+  value       = module.instances.application_instance_ip
+}
