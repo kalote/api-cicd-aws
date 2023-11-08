@@ -1,13 +1,13 @@
-name: deploy
+name: tag-deploy-apply
 
 on:
   push:
-    branches: ["main"]
-    paths-ignore: ["infrastructure/**"]
+    tags:
+      - '*'
 
 jobs:
-  deploy:
-    name: Build & deploy docker image
+  tag-deploy-apply:
+    name: Tag image & deploy image & apply infra
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,14 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: app_image
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.ref_name }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: terraform apply with app_version=${{ github.ref_name }}
+        uses: dflook/terraform-apply@v1
+        with:
+          path: "infrastructure"
+          variables: |
+            app_version="${{ github.ref_name }}"

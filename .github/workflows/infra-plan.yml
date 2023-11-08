@@ -1,4 +1,4 @@
-name: infrastructure
+name: infrastructure-plan
 
 on:
   pull_request:
@@ -9,8 +9,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  infrastructure:
-    name: Infrastructure
+  infrastructure-plan:
+    name: Infrastructure Plan
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-name: infrastructure
+name: infrastructure-apply
 
 on:
   push:
@@ -10,8 +10,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  infrastructure:
-    name: Infrastructure
+  infrastructure-apply:
+    name: Infrastructure Apply
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
