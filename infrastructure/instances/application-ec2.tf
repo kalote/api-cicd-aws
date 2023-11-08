@@ -12,10 +12,11 @@ resource "aws_instance" "application" {
   tags = {
     Name = "Application"
   }
-  user_data = templatefile("${path.module}/templates/init-application.sh", {
-    repo_url        = "${var.ecr_repo_url}"
-    app_version     = "${var.app_version}"
-    registry_id     = "${var.registry_id}"
-    registry_region = "${var.registry_region}"
-  })
+  # user_data = templatefile("${path.module}/templates/init-application.sh", {
+  #   repo_url        = "${var.ecr_repo_url}"
+  #   app_version     = "${var.app_version}"
+  #   registry_id     = "${var.registry_id}"
+  #   registry_region = "${var.registry_region}"
+  # })
+  user_data = filebase64("${path.module}/templates/init-application-debug.sh")
 }
