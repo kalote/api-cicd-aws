@@ -11,5 +11,5 @@ resource "aws_instance" "mongo" {
   tags = {
     Name = "Mongo"
   }
-  user_data = templatefile("${path.module}/init-mongo.sh", {})
+  user_data = filebase64("${path.module}/templates/init-mongo.sh")
 }
