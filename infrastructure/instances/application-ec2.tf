@@ -13,9 +13,11 @@ resource "aws_instance" "application" {
     Name = "Application"
   }
   user_data = templatefile("${path.module}/templates/init-application.sh", {
-    repo_url        = "${var.ecr_repo_url}"
-    app_version     = "${var.app_version}"
-    registry_id     = "${var.registry_id}"
-    registry_region = "${var.registry_region}"
+    repo_url          = "${var.ecr_repo_url}"
+    app_version       = "${var.app_version}"
+    registry_id       = "${var.registry_id}"
+    registry_region   = "${var.registry_region}"
+    redis_instance_ip = "${aws_instance.redis.private_ip}"
+    mongo_instance_ip = "${aws_instance.mongo.private_ip}"
   })
 }
