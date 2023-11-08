@@ -9,6 +9,19 @@ This application is a showcase of using:
 
 The app is a basic web-server using expressJS and Typescript running on port 8000. It comes with a few tests and a `Dockerfile` to build the docker image.
 
+The application provides multiple endpoints:
+
+- GET / => index page
+- GET /status => health check page
+- POST /api/user/create => post data here to create a record in the DB 
+
+```bash
+curl http://localhost:8000/api/user/create -H "Content-type: Application/json" -d '{"name": "Marie", "position": "CEO"}'
+```
+
+- GET /users => list all users (use cache after first request)
+- GET /user/:id => list information about a specific user (use cache after first request)
+
 ## run locally
 
 ```bash
