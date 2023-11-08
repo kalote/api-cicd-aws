@@ -13,7 +13,9 @@ resource "aws_instance" "application" {
     Name = "Application"
   }
   user_data = templatefile("${path.module}/init.sh", {
-    repo_url    = "${var.ecr_repo_url}"
-    app_version = "${var.app_version}"
+    repo_url        = "${var.ecr_repo_url}"
+    app_version     = "${var.app_version}"
+    registry_id     = "${var.registry_id}"
+    registry_region = "${var.registry_region}"
   })
 }
