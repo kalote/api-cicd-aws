@@ -12,3 +12,13 @@ output "subnet_private_id" {
   description = "The private subnet ID"
   value       = aws_subnet.subnet_private.id
 }
+
+output "sg_app_id" {
+  description = "The SG for the application"
+  value       = aws_security_group.security_group_app.id
+}
+
+output "sg_mongo_id" {
+  description = "The SG for the mongo / redis"
+  value       = aws_security_group.security_group_mongo.id
+}

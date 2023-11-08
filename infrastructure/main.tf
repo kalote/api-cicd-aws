@@ -32,3 +32,14 @@ module "network" {
 module "ecr" {
   source = "./ecr"
 }
+
+module "instances" {
+  source = "./instances"
+
+  sg_app_id         = module.network.sg_app_id
+  sg_mongo_id       = module.network.sg_mongo_id
+  subnet_public_id  = module.network.subnet_public_id
+  subnet_private_id = module.network.subnet_private_id
+  ecr_repo_url      = module.ecr.repository_url
+  version           = var.app_version
+}

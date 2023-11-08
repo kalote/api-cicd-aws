@@ -19,11 +19,13 @@ resource "aws_security_group" "security_group_app" {
     description = "HTTP"
   }
 
+  # SSH access only from my home computer
+  # Will be removed
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["83.51.43.43/32"]
     description = "SSH"
   }
 
