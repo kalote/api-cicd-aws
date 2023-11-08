@@ -1,12 +1,12 @@
-name: test-build-deploy
+name: build-test
 
 on:
   pull_request:
     paths-ignore: ["infrastructure/**"]
 
 jobs:
-  test-build-deploy:
-    name: Application test build & deploy
+  build-test:
+    name: Application build & test
     runs-on: ubuntu-latest
 
     services:
